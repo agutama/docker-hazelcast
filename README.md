@@ -1,1 +1,1 @@
-# docker-hazelcast
+# Docker Hazelcast + Management Center
