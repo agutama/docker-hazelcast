@@ -6,13 +6,11 @@ services:
     environment:
       # - "HZ_NETWORK_PUBLICADDRESS=10.100.1.111:5701"
       - "HZ_CLUSTERNAME=dev"
-      - "PROMETHEUS_PORT=9999"
-      - "JAVA_OPTS=-Xms512M -Xmx1024M -Dhazelcast.jmx=true"
+      - "JAVA_OPTS=-Xms512M -Xmx512M -Dhazelcast.jmx=true"
 
     restart: always
     ports:
       - 5701:5701
-      - 9999:9999
     networks:
       - hazelcast-network
 
@@ -21,13 +19,11 @@ services:
     environment:
       # - "HZ_NETWORK_PUBLICADDRESS=10.100.1.111:5702"
       - "HZ_CLUSTERNAME=dev"
-      - "PROMETHEUS_PORT=8888"
-      - "JAVA_OPTS=-Xms512M -Xmx1024M -Dhazelcast.jmx=true"
+      - "JAVA_OPTS=-Xms512M -Xmx512M -Dhazelcast.jmx=true"
 
     restart: always
     ports:
       - 5702:5702
-      - 8888:8888
     networks:
       - hazelcast-network
 
@@ -36,21 +32,25 @@ services:
     environment:
       # - "HZ_NETWORK_PUBLICADDRESS=10.100.1.111:5703"
       - "HZ_CLUSTERNAME=dev"
-      - "PROMETHEUS_PORT=7777"
-      - "JAVA_OPTS=-Xms512M -Xmx1024M -Dhazelcast.jmx=true"
+      - "JAVA_OPTS=-Xms512M -Xmx512M -Dhazelcast.jmx=true"
 
     restart: always
     ports:
       - 5703:5703
-      - 7777:7777
     networks:
       - hazelcast-network
   
   hazelcast_mc:
     image: hazelcast/management-center:latest
     restart: always
+    environment:
+    - "MC_ADMIN_USER=admin"
+    - "MC_ADMIN_PASSWORD=P4ssw0rd"
+    - "MIN_HEAP_SIZE='512M'"
+    - "MAX_HEAP_SIZE='512M'"
+    - "-Dhazelcast.mc.lock.skip=true"
     ports:
-      - 8080:8080
+      - 8181:8080
     networks:
       - hazelcast-network
 
